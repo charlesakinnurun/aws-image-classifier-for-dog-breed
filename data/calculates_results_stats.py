@@ -112,4 +112,3 @@ def calculates_results_stats(results_dic):
     )
 
     return results_stats_dic
-    return results_stats_dic
