@@ -16,10 +16,13 @@ def print_results(results_dic, results_stats, model,
     if "pct_match" in results_stats:
         print("Percentage of Correct Matches: ", results_stats["pct_match"])
 
-    if print_incorrect_dogs:
-        print("\n*** Misclassified Dogs ***")
+    incorrect_dog_assignments = any(
+        image_data[3] != image_data[4] for image_data in results_dic.values()
+    )
+    if print_incorrect_dogs and incorrect_dog_assignments:
+        print("\n*** Incorrect Dog/Not-Dog Assignments ***")
         for image_data in results_dic.values():
-            if image_data[3] == 1 and image_data[4] == 0:
+            if image_data[3] != image_data[4]:
                 print("Pet Image Label:", image_data[0])
                 print("Classifier Label:", image_data[1])
                 print()
