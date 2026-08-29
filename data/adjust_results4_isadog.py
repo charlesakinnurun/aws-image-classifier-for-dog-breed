@@ -67,36 +67,17 @@ def adjust_results4_isadog(results_dic, dogfile):
     Returns:
            None - results_dic is mutable data type so no return needed.
     """    
-    # Create dictionary of dog names
     dognames_dic = dict()
+    with open(dogfile, "r") as infile:
+        for line in infile:
+            dogname = line.strip().lower()
+            if dogname and dogname not in dognames_dic:
+                dognames_dic[dogname] = 1
 
-    # Read dog name from the dognames.txt
-    with open(dogfile,"r") as f:
-      for line in f:
-        dogname = line.rstrip()
-
-        # Check for duplicate dog names
-        if dogname in dognames_dic:
-          print("Warning: Duplicate dog name:", dog_name)
-
-        dognames_dic[dogname] == 1
-
-      # Determine whether each label is a dog
-      for key in results_dic:
-        pet_image_label = results_dic[key][0]
-        classifer_label = results_dic[key][0]
-      # 1 = dog, 0 = not a dog
-      if pet_image_label in dognames_dic:
-        pet_image_is_a_dog = 1
-      else:
-        pet_image_is_not_a_dog = 0
-      if classifer_label in dognames_dic:
-        classifier_is_a_dog = 1
-      else:
-        classifier_is_a_dog = 0
-      # Add the two values to the results of the dictionary      
-      results_dic[key].extend([
-        pet_image_is_a_dog,
-        classifier_is_a_dog
-      ])
+    for key in results_dic:
+        pet_image_label = results_dic[key][0].lower().strip()
+        classifier_label = results_dic[key][1].lower().strip()
+        pet_image_is_a_dog = 1 if pet_image_label in dognames_dic else 0
+        classifier_is_a_dog = 1 if classifier_label in dognames_dic else 0
+        results_dic[key].extend((pet_image_is_a_dog, classifier_is_a_dog))
     
