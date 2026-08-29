@@ -57,7 +57,7 @@ def get_pet_labels(image_dir):
           low_pet_image = filename.lower()
 
           # Split the filename by underscore
-          word_list_pet_image = low_pet_image.Split("_")
+          word_list_pet_image = low_pet_image.split("_")
 
           # Create pet name
           pet_name = ""
